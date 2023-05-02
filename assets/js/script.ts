@@ -1,24 +1,45 @@
 $(document).ready(function () {
     let $body: any = $('body'),
-        $rocket: any = $body.find('#sl-rocket');
+        $rocket: any = $body.find('#sl-rocket'),
+        angle: number = 10;
+
+    //falling simulator function
+    const fallingSimulator = () => {
+        if (Number($rocket.css('bottom').replace('px', '')) > 0) {
+            $rocket.css({top: `${Number($rocket.css('top').replace('px', '')) + 5}px`});
+        } else {
+            clearInterval(timer);
+        }
+    }
+
+    //this function controls direction of rocket based on user choice
+    const rocketController = (direction: string) => {
+        switch (direction) {
+            case 'ArrowUp':
+                $rocket.css({top: `${Number($rocket.css('top').replace('px', '')) - 5}px`});
+                break;
+            default:
+                $rocket.css({transform: `rotate(${angle}deg)`});
+        }
+    }
 
     $body.on('keydown', function (e) {
-        let key = e.key,
-            rocketTop: number = Number($rocket.css('top').replace('px', '')),
-            rocketRight: number = Number($rocket.css('right').replace('px', ''));
+        let key = e.key;
 
-        if (key.charCodeAt(0) === 65) {
+        if (key.charCodeAt(0) === 65 && key !== 'ArrowDown') {
             switch (key) {
-                case 'ArrowUp':
-                    $rocket.css({top: `${rocketTop - 1}px`});
-                    break;
                 case 'ArrowRight':
-                    $rocket.css({right: `${rocketRight + 1}px`});
+                    angle--;
                     break;
                 case 'ArrowLeft':
-                    $rocket.css({right: `${rocketRight - 1}px`});
-                    break;
+                    angle++;
+                    break
             }
+            rocketController(key);
         }
     })
+
+    let timer = setInterval(() => {
+        fallingSimulator();
+    }, 500)
 })

@@ -8,12 +8,16 @@ body {
   .sl-root {
     width: 100%;
     height: 100%;
+    position: relative;
     background: linear-gradient(to top, #283E51, #0A2342);
+    overflow: hidden;
 
     #sl-rocket {
       position: absolute;
       top: 100px;
       right: 300px;
+      transform: rotateZ(10deg);
+      transition: all 0.1s;
 
       img {
         width: 100px;
