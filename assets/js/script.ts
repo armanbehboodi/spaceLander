@@ -1,45 +1,42 @@
-$(document).ready(function () {
+$(function () {
     let $body: any = $('body'),
         $rocket: any = $body.find('#sl-rocket'),
+        height: number = Number($rocket.css('top').replace('px', '')),
         angle: number = 10;
 
     //falling simulator function
     const fallingSimulator = () => {
+        console.log(height)
         if (Number($rocket.css('bottom').replace('px', '')) > 0) {
-            $rocket.css({top: `${Number($rocket.css('top').replace('px', '')) + 5}px`});
+            $rocket.css({top: `${height}px`});
         } else {
             clearInterval(timer);
         }
     }
 
-    //this function controls direction of rocket based on user choice
-    const rocketController = (direction: string) => {
-        switch (direction) {
-            case 'ArrowUp':
-                $rocket.css({top: `${Number($rocket.css('top').replace('px', '')) - 5}px`});
-                break;
-            default:
-                $rocket.css({transform: `rotate(${angle}deg)`});
-        }
-    }
-
+    //controlling the rocket
     $body.on('keydown', function (e) {
         let key = e.key;
 
         if (key.charCodeAt(0) === 65 && key !== 'ArrowDown') {
             switch (key) {
+                case 'ArrowUp':
+                    height -= 5;
+                    break;
                 case 'ArrowRight':
-                    angle--;
+                    angle -= 1;
+                    $rocket.css({transform: `translateY(15px) rotate(${angle}deg)`});
                     break;
                 case 'ArrowLeft':
-                    angle++;
+                    angle += 1;
+                    $rocket.css({transform: `translateY(15px) rotate(${angle}deg)`});
                     break
             }
-            rocketController(key);
         }
     })
 
     let timer = setInterval(() => {
+        height += 1;
         fallingSimulator();
-    }, 500)
+    }, 150)
 })
