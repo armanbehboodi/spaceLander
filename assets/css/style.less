@@ -16,13 +16,31 @@ body {
       position: absolute;
       top: 100px;
       right: 300px;
-      transform: translateY(15px) rotateZ(10deg);
-      transition: all 0.5s;
+      transform: translateY(18px) rotateZ(10deg);
+      transition: all 0.025s;
 
       img {
         width: 100px;
         height: 100px;
         transform: rotate(315deg);
+      }
+
+      .sl-flame {
+        display: inline-block;
+        background-image: linear-gradient(0deg, #ff0000 28%, #ffa500 74%);
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        filter: blur(4px);
+        transition: all 0.25s;
+      }
+
+      #sl-flame-bottom {
+        width: 10px;
+        height: 0;
+        top: 100%;
+        left: 50%;
+        transform: translate(-4px,-22px);
       }
     }
   }
