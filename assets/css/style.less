@@ -27,7 +27,6 @@ body {
 
       .sl-flame {
         display: inline-block;
-        background-image: linear-gradient(0deg, #ff0000 28%, #ffa500 74%);
         position: absolute;
         top: 100%;
         left: 50%;
@@ -35,12 +34,33 @@ body {
         transition: all 0.25s;
       }
 
+      .sl-side-flames {
+        background-image: linear-gradient(-90deg, #ff0000 28%, #ffa500 65%);
+      }
+
       #sl-flame-bottom {
         width: 10px;
         height: 0;
         top: 100%;
         left: 50%;
-        transform: translate(-4px,-22px);
+        background-image: linear-gradient(0deg, #ff0000 28%, #ffa500 74%);
+        transform: translate(-4px, -22px);
+      }
+
+      #sl-flame-right {
+        width: 0;
+        height: 10px;
+        top: 25px;
+        left: 60px;
+      }
+
+      #sl-flame-left {
+        width: 0;
+        height: 10px;
+        top: 25px;
+        left: 22px;
+        transform: rotateY(180deg);
+        transform-origin: 10px 10px;
       }
     }
   }
