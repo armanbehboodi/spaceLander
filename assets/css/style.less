@@ -4,6 +4,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow: hidden;
 
   .sl-root {
     width: 100%;
@@ -18,6 +19,7 @@ body {
       right: 300px;
       transform: translateY(18px) rotateZ(10deg);
       transition: all 0.025s;
+      z-index: 100;
 
       img {
         width: 100px;
@@ -63,5 +65,35 @@ body {
         transform-origin: 10px 10px;
       }
     }
+  }
+
+  .sl-stars {
+    .sl-star {
+      position: absolute;
+      display: inline-block;
+      background-color: #efefef;
+      transform: rotate(45deg);
+      animation: blink infinite;
+    }
+  }
+}
+
+//animation
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: 0.25;
+  }
+  100% {
+    opacity: 0;
   }
 }
