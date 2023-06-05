@@ -49,6 +49,7 @@ $(function () {
             $rocket.css({top: `${height += velocity}px`, transform: `rotate(${deviation += angle}deg)`});
         } else {
             if (Math.abs(deviation) > 5 || velocity > 1) {
+
                 let explosionTimer: number = 0,
                     explosionInterval: number = setInterval(() => {
                         if (explosionTimer < 50) {
