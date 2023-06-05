@@ -1,3 +1,11 @@
+:root {
+  --sky: linear-gradient(to top, #283E51, #0A2342);
+  --side-flames: linear-gradient(-90deg, rgba(0, 212, 255, 1) 0%, rgba(9, 9, 121, 1) 85%, rgba(2, 0, 36, 1) 100%);
+  --main-flame: linear-gradient(0deg, rgba(0, 212, 255, 1) 0%, rgba(9, 9, 121, 1) 85%, rgba(2, 0, 36, 1) 100%);
+  --silver: #d4d4d4;
+  --gray: #404040;
+}
+
 body {
   width: 100%;
   height: 100vh;
@@ -10,34 +18,74 @@ body {
     width: 100%;
     height: 100%;
     position: relative;
-    background: linear-gradient(to top, #283E51, #0A2342);
+    background: var(--sky);
     overflow: hidden;
 
     #sl-rocket {
       position: absolute;
       top: 100px;
       right: 300px;
-      transform: translateY(18px) rotateZ(10deg);
+      transform: rotateZ(10deg);
       transition: all 0.025s;
       z-index: 100;
 
-      img {
-        width: 100px;
-        height: 100px;
-        transform: rotate(315deg);
+      #sl-booster {
+        width: 16px;
+        height: 60px;
+        background: var(--silver);
+        border: 1px solid var(--gray);
+        border-radius: 3px;
+        z-index: 1;
+        position: relative;
+
+        img {
+          position: absolute;
+          top: 10px;
+          width: 17px;
+        }
+
+        .sl-booster-legs {
+          position: absolute;
+          width: 40px;
+          height: 5px;
+          border: 1px solid var(--gray);
+          border-radius: 5px;
+          background: var(--silver);
+          bottom: -3px;
+        }
+
+        #sl-booster-right-leg {
+          left: -1px;
+          transform: rotate(30deg);
+        }
+
+        #sl-booster-left-leg {
+          right: -1px;
+          transform: rotate(150deg);
+        }
+
+        &:after {
+          width: 16px;
+          height: 20px;
+          content: '';
+          position: absolute;
+          bottom: 0;
+          background-color: var(--silver);
+        }
       }
 
       .sl-flame {
         display: inline-block;
         position: absolute;
-        top: 100%;
-        left: 50%;
         filter: blur(4px);
         transition: all 0.25s;
       }
 
       .sl-side-flames {
-        background-image: linear-gradient(-90deg, #ff0000 28%, #ffa500 65%);
+        width: 0;
+        height: 10px;
+        top: 30px;
+        background: var(--side-flames);
       }
 
       #sl-flame-bottom {
@@ -45,22 +93,16 @@ body {
         height: 0;
         top: 100%;
         left: 50%;
-        background-image: linear-gradient(0deg, #ff0000 28%, #ffa500 74%);
-        transform: translate(-4px, -22px);
+        background-image: var(--main-flame);
+        transform: translate(-5px, -1px);
       }
 
       #sl-flame-right {
-        width: 0;
-        height: 10px;
-        top: 25px;
-        left: 60px;
+        left: 15px;
       }
 
       #sl-flame-left {
-        width: 0;
-        height: 10px;
-        top: 25px;
-        left: 22px;
+        left: -15px;
         transform: rotateY(180deg);
         transform-origin: 10px 10px;
       }
@@ -71,7 +113,7 @@ body {
     .sl-star {
       position: absolute;
       display: inline-block;
-      background-color: #efefef;
+      background-color: var(--silver);
       transform: rotate(45deg);
       animation: blink infinite;
     }
