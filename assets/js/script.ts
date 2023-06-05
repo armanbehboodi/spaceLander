@@ -5,6 +5,9 @@ $(function () {
         $sideFlames: any = $('.sl-side-flames'),
         $engineSoundEffect: any = $('#sl-audio-effect-engine'),
         $explosionSoundEffect: any = $('#sl-audio-effect-explosion'),
+        $velocity: JQuery = $('.sl-control-velocity p:last-child'),
+        $deviation: JQuery = $('.sl-control-deviation p:last-child'),
+        $finalMessage: JQuery = $('#sl-final-message'),
         deviceWidth: number = $body.width(),
         deviceHeight: number = $body.height(),
         height: number = Number($rocket.css('top').replace('px', '')),
@@ -33,8 +36,15 @@ $(function () {
         numberOfStars++;
     }
 
+    $finalMessage.find('a').attr('href', window.location.href);
+
     //falling simulator function
     const fallingSimulator = (): void => {
+        $velocity.html(`${Math.abs((velocity * 36)).toFixed(0)} km/h`)
+            .css({color: `${Math.abs(velocity) > 1 ? '#c51212' : '#00db32'}`});
+        $deviation.html(`${deviation.toFixed(0)} deg`)
+            .css({color: `${Math.abs(deviation) > 5 ? '#c51212' : '#00db32'}`});
+
         if (Number($rocket.css('bottom').replace('px', '')) > 0) {
             $rocket.css({top: `${height += velocity}px`, transform: `rotate(${deviation += angle}deg)`});
         } else {
@@ -51,8 +61,9 @@ $(function () {
                     }, 15);
                 $explosionSoundEffect[0].play();
             }
-            missionDone = true;
             clearInterval(fallingInterval);
+            missionDone = true;
+            $finalMessage.css({left: '0'});
         }
     }
 
