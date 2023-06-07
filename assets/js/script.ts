@@ -20,13 +20,13 @@ $(function () {
     //background handler (blinking stars)
     while (numberOfStars < 155) {
         let $star: JQuery = $(`<span class="sl-star" id="star-no-${numberOfStars}">`),
-            demintion: number = Math.round(Math.random() * 5),
+            dimension: number = Math.round(Math.random() * 5),
             top: number = Math.round(Math.random() * deviceHeight),
             left: number = Math.round(Math.random() * deviceWidth);
 
         $star.css({
-            width: `${demintion}px`,
-            height: `${demintion}px`,
+            width: `${dimension}px`,
+            height: `${dimension}px`,
             top: `${top}px`,
             left: `${left}px`,
             animationDuration: `${Math.floor(Math.random() * 8) + 3}s`
@@ -42,7 +42,7 @@ $(function () {
     const fallingSimulator = (): void => {
         $velocity.html(`${Math.abs((velocity * 36)).toFixed(0)} km/h`)
             .css({color: `${Math.abs(velocity) > 1 ? '#c51212' : '#00db32'}`});
-        $deviation.html(`${deviation.toFixed(0)} deg`)
+        $deviation.html(`${(deviation % 360).toFixed(0)} deg`)
             .css({color: `${Math.abs(deviation) > 5 ? '#c51212' : '#00db32'}`});
 
         if (Number($rocket.css('bottom').replace('px', '')) > 0) {
