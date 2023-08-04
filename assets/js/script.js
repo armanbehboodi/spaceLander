@@ -1,34 +1,37 @@
 $(function () {
     var $body = $('body'), $rocket = $body.find('#sl-rocket'), $mainFlame = $('#sl-flame-bottom'), $sideFlames = $('.sl-side-flames'), $engineSoundEffect = $('#sl-audio-effect-engine'), $explosionSoundEffect = $('#sl-audio-effect-explosion'), $velocity = $('.sl-control-velocity p:last-child'), $deviation = $('.sl-control-deviation p:last-child'), $finalMessage = $('#sl-final-message'), deviceWidth = $body.width(), deviceHeight = $body.height(), height = Number($rocket.css('top').replace('px', '')), deviation = 10, velocity = 0, angle = 0, numberOfStars = 1, missionDone = false;
-    //background handler (blinking stars)
+    $finalMessage.find('a').attr('href', window.location.href);
+    // background handler (blinking stars)
     while (numberOfStars < 155) {
-        var $star = $("<span class=\"sl-star\" id=\"star-no-".concat(numberOfStars, "\">")), demintion = Math.round(Math.random() * 5), top_1 = Math.round(Math.random() * deviceHeight), left = Math.round(Math.random() * deviceWidth);
+        var $star = $("<span class=\"sl-star\" id=\"star-no-" + numberOfStars + "\">"), dimension = Math.round(Math.random() * 5), top_1 = Math.round(Math.random() * deviceHeight), left = Math.round(Math.random() * deviceWidth);
         $star.css({
-            width: "".concat(demintion, "px"),
-            height: "".concat(demintion, "px"),
-            top: "".concat(top_1, "px"),
-            left: "".concat(left, "px"),
-            animationDuration: "".concat(Math.floor(Math.random() * 8) + 3, "s")
+            width: dimension + "px",
+            height: dimension + "px",
+            top: top_1 + "px",
+            left: left + "px",
+            animationDuration: Math.floor(Math.random() * 8) + 3 + "s"
         });
         $body.find(".sl-stars").append($star);
         numberOfStars++;
     }
-    $finalMessage.find('a').attr('href', window.location.href);
-    //falling simulator function
+    // falling simulator function
     var fallingSimulator = function () {
-        $velocity.html("".concat(Math.abs((velocity * 36)).toFixed(0), " km/h"))
-            .css({ color: "".concat(Math.abs(velocity) > 1 ? '#c51212' : '#00db32') });
-        $deviation.html("".concat(deviation.toFixed(0), " deg"))
-            .css({ color: "".concat(Math.abs(deviation) > 5 ? '#c51212' : '#00db32') });
+        var correctedDeviation = deviation % 360;
+        if (correctedDeviation > 180)
+            correctedDeviation -= 360;
+        $velocity.html(Math.abs((velocity * 36)).toFixed(0) + " km/h")
+            .css({ color: "" + (Math.abs(velocity) > 1 ? '#c51212' : '#00db32') });
+        $deviation.html(correctedDeviation.toFixed(0) + " deg")
+            .css({ color: "" + (Math.abs(correctedDeviation) > 5 ? '#c51212' : '#00db32') });
         if (Number($rocket.css('bottom').replace('px', '')) > 0) {
-            $rocket.css({ top: "".concat(height += velocity, "px"), transform: "rotate(".concat(deviation += angle, "deg)") });
+            $rocket.css({ top: (height += velocity) + "px", transform: "rotate(" + (deviation += angle) + "deg)" });
         }
         else {
-            if (Math.abs(deviation) > 5 || velocity > 1) {
+            if (Math.abs(correctedDeviation) > 5 || velocity > 1) {
                 var explosionTimer_1 = 0, explosionInterval_1 = setInterval(function () {
                     if (explosionTimer_1 < 50) {
                         explosionTimer_1++;
-                        $rocket.css({ filter: "blur(".concat(explosionTimer_1, "px)") });
+                        $rocket.css({ filter: "blur(" + explosionTimer_1 + "px)" });
                     }
                     else {
                         clearInterval(explosionInterval_1);
@@ -42,10 +45,10 @@ $(function () {
             $finalMessage.css({ left: '0' });
         }
     };
-    //falling simulation timer
+    // falling simulation timer
     var fallingInterval = setInterval(function () {
         velocity += 0.005;
-        if (deviation > 0 && deviation < 180) {
+        if (deviation > 0 && deviation % 360 < 180) {
             angle += 0.001;
         }
         else {
@@ -53,15 +56,15 @@ $(function () {
         }
         fallingSimulator();
     }, 25);
-    //activating rocket controllers
+    // activating rocket controllers
     $body.on('keydown', function (e) {
-        var key = e.key;
+        var absDeviation = Math.abs(deviation % 360), key = e.key;
         if (key.charCodeAt(0) == 65 && key !== 'ArrowDown' && !missionDone) {
             $engineSoundEffect[0].play();
             switch (key) {
                 case 'ArrowUp':
-                    $mainFlame.css({ height: "".concat(Math.random() * 11 + 15, "px") });
-                    if (Math.abs(deviation) > 90) {
+                    $mainFlame.css({ height: Math.random() * 11 + 15 + "px" });
+                    if (absDeviation > 90 && absDeviation < 270) {
                         velocity += 0.025;
                     }
                     else {
@@ -69,11 +72,11 @@ $(function () {
                     }
                     break;
                 case 'ArrowRight':
-                    $('#sl-flame-right').css({ width: "".concat(Math.random() * 6 + 10, "px") });
+                    $('#sl-flame-right').css({ width: Math.random() * 6 + 10 + "px" });
                     angle -= 0.01;
                     break;
                 case 'ArrowLeft':
-                    $('#sl-flame-left').css({ width: "".concat(Math.random() * 6 + 10, "px") });
+                    $('#sl-flame-left').css({ width: Math.random() * 6 + 10 + "px" });
                     angle += 0.01;
                     break;
             }
