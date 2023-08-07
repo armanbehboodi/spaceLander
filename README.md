@@ -8,4 +8,4 @@ use cursor control keys
 
 this game only works on pc (yet)
 
-https://armanbehboodi.github.io/spaceLander.github.io/
+https://armanbehboodi.github.io/spaceLander/
