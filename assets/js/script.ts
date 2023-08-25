@@ -107,6 +107,9 @@ $(function () {
                     break;
             }
         }
+
+        // reload game with alt key
+        if (key === "Alt" && missionDone) location.reload();
     })
         .on('keyup', function (): void {
             $mainFlame.css({height: '0'});
