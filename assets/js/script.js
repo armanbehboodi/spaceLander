@@ -58,7 +58,7 @@ $(function () {
     }, 25);
     // activating rocket controllers
     $body.on('keydown touchstart', function (e) {
-        var isTouchEvent = e.type === "touchstart", absDeviation = Math.abs(deviation % 360), key = !isTouchEvent ? e.key : $(e.target).attr("id");
+        var isTouchEvent = e.type === "touchstart", absDeviation = Math.abs(deviation % 360), key = !isTouchEvent ? e.key : $(e.target).attr("id"), velocityIndex = isTouchEvent ? 0.5 : 0.025, angleIndex = isTouchEvent ? 0.5 : 0.01;
         if (((key.charCodeAt(0) == 65 && key !== 'ArrowDown') || (isTouchEvent && key)) && !missionDone) {
             $engineSoundEffect[0].play();
             if (isTouchEvent)
@@ -67,19 +67,19 @@ $(function () {
                 case 'ArrowUp':
                     $mainFlame.css({ height: Math.random() * 11 + 15 + "px" });
                     if (absDeviation > 90 && absDeviation < 270) {
-                        velocity += 0.025;
+                        velocity += velocityIndex;
                     }
                     else {
-                        velocity -= 0.025;
+                        velocity -= velocityIndex;
                     }
                     break;
                 case 'ArrowRight':
                     $('#sl-flame-right').css({ width: Math.random() * 6 + 10 + "px" });
-                    angle -= 0.01;
+                    angle -= angleIndex;
                     break;
                 case 'ArrowLeft':
                     $('#sl-flame-left').css({ width: Math.random() * 6 + 10 + "px" });
-                    angle += 0.01;
+                    angle += angleIndex;
                     break;
             }
         }
@@ -87,9 +87,11 @@ $(function () {
         if (key === "Alt" && missionDone)
             location.reload();
     })
-        .on('keyup touchend', function () {
+        .on('keyup touchend', function (e) {
         $mainFlame.css({ height: '0' });
         $sideFlames.css({ width: '0' });
         $engineSoundEffect[0].pause();
+        if (e.type === "touchend")
+            $("#" + $(e.target).attr("id")).css({ background: "rgba(255, 255, 255, 0.05)" });
     });
 });

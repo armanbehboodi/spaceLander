@@ -86,8 +86,8 @@ $(function () {
         let isTouchEvent = e.type === "touchstart",
             absDeviation = Math.abs(deviation % 360),
             key = !isTouchEvent ? e.key : $(e.target).attr("id"),
-            velocityIndex = isTouchEvent ? 1 : 0.025,
-            angleIndex = isTouchEvent ? 1 : 0.01;
+            velocityIndex = isTouchEvent ? 0.5 : 0.025,
+            angleIndex = isTouchEvent ? 0.5 : 0.01;
 
         if (((key.charCodeAt(0) == 65 && key !== 'ArrowDown') || (isTouchEvent && key)) && !missionDone) {
             $engineSoundEffect[0].play();
@@ -116,9 +116,10 @@ $(function () {
         // reload game with alt key
         if (key === "Alt" && missionDone) location.reload();
     })
-        .on('keyup touchend', function (): void {
+        .on('keyup touchend', function (e): void {
             $mainFlame.css({height: '0'});
             $sideFlames.css({width: '0'});
             $engineSoundEffect[0].pause();
+            if (e.type === "touchend") $("#" + $(e.target).attr("id")).css({background: "rgba(255, 255, 255, 0.05)"});
         })
 })
