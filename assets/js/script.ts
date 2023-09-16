@@ -87,7 +87,7 @@ $(function () {
             absDeviation = Math.abs(deviation % 360),
             key = !isTouchEvent ? e.key : $(e.target).attr("id");
 
-        if (key.charCodeAt(0) == 65 && key !== 'ArrowDown' && !missionDone) {
+        if (((key.charCodeAt(0) == 65 && key !== 'ArrowDown') || (isTouchEvent && key)) && !missionDone) {
             $engineSoundEffect[0].play();
             if (isTouchEvent) $("#" + $(e.target).attr("id")).css({background: "rgba(255, 255, 255, 0.1)"});
 
