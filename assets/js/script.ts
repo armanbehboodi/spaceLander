@@ -85,7 +85,9 @@ $(function () {
     $body.on('keydown touchstart', function (e): void {
         let isTouchEvent = e.type === "touchstart",
             absDeviation = Math.abs(deviation % 360),
-            key = !isTouchEvent ? e.key : $(e.target).attr("id");
+            key = !isTouchEvent ? e.key : $(e.target).attr("id"),
+            velocityIndex = isTouchEvent ? 1 : 0.025,
+            angleIndex = isTouchEvent ? 1 : 0.01;
 
         if (((key.charCodeAt(0) == 65 && key !== 'ArrowDown') || (isTouchEvent && key)) && !missionDone) {
             $engineSoundEffect[0].play();
@@ -95,18 +97,18 @@ $(function () {
                 case 'ArrowUp':
                     $mainFlame.css({height: `${Math.random() * 11 + 15}px`});
                     if (absDeviation > 90 && absDeviation < 270) {
-                        velocity += 0.025;
+                        velocity += velocityIndex;
                     } else {
-                        velocity -= 0.025;
+                        velocity -= velocityIndex;
                     }
                     break;
                 case 'ArrowRight':
                     $('#sl-flame-right').css({width: `${Math.random() * 6 + 10}px`});
-                    angle -= 0.01;
+                    angle -= angleIndex;
                     break;
                 case 'ArrowLeft':
                     $('#sl-flame-left').css({width: `${Math.random() * 6 + 10}px`});
-                    angle += 0.01;
+                    angle += angleIndex;
                     break;
             }
         }

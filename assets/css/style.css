@@ -111,7 +111,7 @@ body .sl-root .top-joystick {
   aspect-ratio: 1;
   border-radius: 155px;
   left: 50%;
-  bottom: 5%;
+  bottom: 10%;
   transform: translateX(-50%);
 }
 body .sl-root .right-joystick {
