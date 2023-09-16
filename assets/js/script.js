@@ -57,10 +57,12 @@ $(function () {
         fallingSimulator();
     }, 25);
     // activating rocket controllers
-    $body.on('keydown', function (e) {
-        var absDeviation = Math.abs(deviation % 360), key = e.key;
-        if (key.charCodeAt(0) == 65 && key !== 'ArrowDown' && !missionDone) {
+    $body.on('keydown touchstart', function (e) {
+        var isTouchEvent = e.type === "touchstart", absDeviation = Math.abs(deviation % 360), key = !isTouchEvent ? e.key : $(e.target).attr("id");
+        if (((key.charCodeAt(0) == 65 && key !== 'ArrowDown') || (isTouchEvent && key)) && !missionDone) {
             $engineSoundEffect[0].play();
+            if (isTouchEvent)
+                $("#" + $(e.target).attr("id")).css({ background: "rgba(255, 255, 255, 0.1)" });
             switch (key) {
                 case 'ArrowUp':
                     $mainFlame.css({ height: Math.random() * 11 + 15 + "px" });
@@ -85,7 +87,7 @@ $(function () {
         if (key === "Alt" && missionDone)
             location.reload();
     })
-        .on('keyup', function () {
+        .on('keyup touchend', function () {
         $mainFlame.css({ height: '0' });
         $sideFlames.css({ width: '0' });
         $engineSoundEffect[0].pause();
