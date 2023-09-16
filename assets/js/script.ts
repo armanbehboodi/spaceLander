@@ -82,12 +82,15 @@ $(function () {
     }, 25);
 
     // activating rocket controllers
-    $body.on('keydown', function (e): void {
-        let absDeviation = Math.abs(deviation % 360),
-            key = e.key;
+    $body.on('keydown touchstart', function (e): void {
+        let isTouchEvent = e.type === "touchstart",
+            absDeviation = Math.abs(deviation % 360),
+            key = !isTouchEvent ? e.key : $(e.target).attr("id");
 
         if (key.charCodeAt(0) == 65 && key !== 'ArrowDown' && !missionDone) {
             $engineSoundEffect[0].play();
+            if (isTouchEvent) $("#" + $(e.target).attr("id")).css({background: "rgba(255, 255, 255, 0.1)"});
+
             switch (key) {
                 case 'ArrowUp':
                     $mainFlame.css({height: `${Math.random() * 11 + 15}px`});
@@ -111,7 +114,7 @@ $(function () {
         // reload game with alt key
         if (key === "Alt" && missionDone) location.reload();
     })
-        .on('keyup', function (): void {
+        .on('keyup touchend', function (): void {
             $mainFlame.css({height: '0'});
             $sideFlames.css({width: '0'});
             $engineSoundEffect[0].pause();

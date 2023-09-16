@@ -113,6 +113,35 @@ body {
       }
     }
 
+    .sl-mobile-joystick {
+      display: none;
+      pointer-events: none;
+      max-width: 110px;
+      background: rgba(255, 255, 255, 0.05);
+      position: absolute;
+    }
+
+    .top-joystick {
+      width: 25%;
+      aspect-ratio: 1;
+      border-radius: 155px;
+      left: 50%;
+      bottom: 5%;
+      transform: translateX(-50%);
+    }
+
+    .right-joystick {
+      width: 20%;
+      height: 100%;
+      right: 0;
+    }
+
+    .left-joystick {
+      width: 20%;
+      height: 100%;
+      left: 0;
+    }
+
     .sl-stars {
       .sl-star {
         position: absolute;
@@ -144,6 +173,7 @@ body {
         display: flex;
         flex-flow: row nowrap;
         gap: 10px;
+
         p {
           white-space: nowrap;
         }
@@ -171,6 +201,7 @@ body {
         padding: 5px 10px;
         border-radius: 5px;
         position: relative;
+        max-width: 75%;
 
         span {
           width: 0;
@@ -205,5 +236,38 @@ body {
   }
   100% {
     opacity: 0;
+  }
+}
+
+// media queries
+
+@media screen and (max-width: 768px) {
+  body {
+    .sl-root {
+      .sl-mobile-joystick {
+        display: block;
+        pointer-events: auto;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  body {
+    .sl-root {
+      #sl-rocket {
+        right: 150px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 300px) {
+  body {
+    .sl-root {
+      #sl-rocket {
+        right: 100px;
+      }
+    }
   }
 }
